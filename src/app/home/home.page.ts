@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import * as L from 'leaflet';
 
 @Component({
   selector: 'app-home',
@@ -6,7 +7,45 @@ import { Component } from '@angular/core';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  selectedBasemap!: 'streets';
+  map!: L.Map;
 
-  constructor() {}
+  constructor() { }
+  // ngOnInit() {
 
+  // }
+
+  ionViewDidEnter() {
+    this.map = L.map('mapId').setView([-7.774630249645452, 110.37450450431359], 10)
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(this.map);
+
+
+    const baseMaps = {
+      'OpenStreetMap': L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }),
+      'Satellite': L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
+        maxZoom: 20,
+        subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+        attribution: '&copy; <a href="https://maps.google.com">Google Maps</a>'
+      }),
+      'Terrain': L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+        maxZoom: 17,
+        attribution: '&copy; <a href="https://www.opentopomap.org">OpenTopoMap</a> contributors'
+      })
+    };
+
+    // Tambahkan kontrol lapisan ke peta
+    L.control.layers(baseMaps).addTo(this.map)
+
+    // Buat marker dan tambahkan ke peta
+    const marker = L.marker([-7.774630249645452, 110.37450450431359]).addTo(this.map);
+
+    // Tambahkan popup ke marker
+    marker.bindPopup("<b>Halo Halo </b><br>Aku marker.").openPopup();
+  }
 }
+
