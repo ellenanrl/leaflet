@@ -41,11 +41,23 @@ export class HomePage {
     // Tambahkan kontrol lapisan ke peta
     L.control.layers(baseMaps).addTo(this.map)
 
-    // Buat marker dan tambahkan ke peta
-    const marker = L.marker([-7.774630249645452, 110.37450450431359]).addTo(this.map);
+    const markerIcon = L.icon({
+      iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png', // Ganti dengan URL ikon marker default dari CON
+      iconRetinaUrl:'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png',//GantidenganURLikonmarkerdefault2xdariCDN
+      shadowUrl:'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',//GantidenganURLbayanganmarkerdefaultdariCON
+      iconSize: [25, 41], // Sesuaikan dengan ukuran ikon Anda
+      iconAnchor: [12, 41], // Sesuaikan dengan titik penunjuk ikon Anda
+    });
+  
+    const marker = L.marker([-7.774630249645452, 110.37450450431359], { icon: markerIcon}).addTo(this.map)
+    .bindPopup('Sekolah Vokasi')
+    .openPopup();
 
-    // Tambahkan popup ke marker
-    marker.bindPopup("<b>Halo Halo </b><br>Aku marker.").openPopup();
+    // // Buat marker dan tambahkan ke peta
+    // const marker = L.marker([-7.774630249645452, 110.37450450431359]).addTo(this.map);
+
+    // // Tambahkan popup ke marker
+    // marker.bindPopup("<b>Halo Halo </b><br>Aku marker.").openPopup();
   }
 }
 
